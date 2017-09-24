@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#36bae3</color>
+    <color name="colorPrimaryDark">#268eae</color>
+    <color name="colorAccent">#fc9a02</color>
+    <color name="color">#ffffff</color>
+    <color name="colorLink">#02ffff</color>
+    <color name="colorTitle">#0271a9</color>
+    <color name="colorSubtitle">#48abd9</color>
+    <color name="colorDisabled">#f2f2f2</color>
+    <color name="colorUtnLogo">#025e8c</color>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="institucional_group">
+        <item>AUTORIDADES;http://www.frc.utn.edu.ar/dispensador.frc?iDs=82;1</item>
+        <item>DEPARTAMENTOS;http://www.frc.utn.edu.ar/dispensador.frc?iDs=22;1</item>
+        <item>SECRETARIAS;http://www.frc.utn.edu.ar/dispensador.frc?iDs=21;1</item>
+        <item>FACULTADES REGIONALES;http://www.frc.utn.edu.ar/dispensador.frc?iDs=23;1</item>
+        <!--<item>RELACIONES INTERNACIONALES;http://www.institucional.frc.utn.edu.ar/internacionales/;2</item>-->
+    </array>
+</resources>

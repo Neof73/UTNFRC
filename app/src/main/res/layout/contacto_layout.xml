@@ -1,0 +1,20 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ar.edu.frc.utn.app.FragmentContacto">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ar.edu.frc.utn.app.NestedWebView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/contacto_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:isScrollContainer="false"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+</FrameLayout>
