@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_press"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- MINIATURA -->
-
-        <!-- TITULO -->
         <TextView
             android:id="@+id/pubDate"
             android:layout_width="wrap_content"
@@ -25,37 +24,28 @@
             android:id="@+id/titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:linksClickable="true"
-            android:text="Título"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_below="@+id/pubDate"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp" />
+            android:layout_below="@+id/pubDate"
+            android:linksClickable="true"
+            android:scrollbars="none"
+            android:text="Título"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <View
             android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_below="@+id/titulo"
             android:background="#ffe9e9e9" />
 
-        <!-- DESCRIPCION -->
-        <WebView
+        <ar.edu.frc.utn.app.NestedWebView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/descripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/titulo"
-            android:layout_marginTop="11dp"
+            android:focusable="false"
+            android:isScrollContainer="false"
             android:linksClickable="true"
-            android:text="Descripción"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <!-- LINEA DIVISORIA -->
-
-        <!-- ICONO FORBES-->
-
-        <!-- MARCA FORBES -->
-
-    </RelativeLayout>
+            android:scrollbars="none"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
 </android.support.v7.widget.CardView>

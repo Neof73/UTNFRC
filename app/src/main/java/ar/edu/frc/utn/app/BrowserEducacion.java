@@ -81,7 +81,7 @@ public class BrowserEducacion {
                     if (Uri.parse(url).getPath().contains("contacto") && !Uri.parse(mainurl).getPath().contains("contacto")) {
                         final ViewPager viewPager = (ViewPager) context.findViewById(R.id.pager);
                         view.stopLoading();
-                        viewPager.setCurrentItem(3);
+                        viewPager.setCurrentItem(4);
                     }
                     return false;
                 }
@@ -186,4 +186,5 @@ public class BrowserEducacion {
         }
     }
     */
+
 }

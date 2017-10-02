@@ -25,28 +25,28 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-public class BrowserG2M {
+public class BrowserPress {
     private Context context;
-    private View view;
-    private String mainurl;
     private NestedWebView browser;
     private ViewGroup viewGroup;
-    public BrowserG2M(final Context context, View view, String Url) {
+    public BrowserPress(final Context context, View view, ViewGroup viewGroup) {
         this.context = context;
         this.browser = (NestedWebView) view;
-        this.mainurl = Url;
+        this.viewGroup = viewGroup;
+        Initialize();
     }
 
-    public void GetContent() {
+    private void Initialize() {
         // Enable javascript
         browser.getSettings().setJavaScriptEnabled(true);
         //Fit content to screen..
-        browser.getSettings().setLoadWithOverviewMode(true);
-        browser.getSettings().setUseWideViewPort(true);
+        //browser.getSettings().setLoadWithOverviewMode(true);
+        //browser.getSettings().setUseWideViewPort(true);
         // Set WebView client
 
         browser.setWebChromeClient(new WebChromeClient());
         //browser.addJavascriptInterface(new WebAppInterface(), "Android");
+        //browser.addJavascriptInterface(new ShowCardJavaScriptInterface(), "ShowCard");
         browser.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -55,6 +55,12 @@ public class BrowserG2M {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 context.startActivity(intent);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                //if (viewGroup != null)
+                //    viewGroup.setVisibility(View.VISIBLE);
             }
         });
 
@@ -84,6 +90,31 @@ public class BrowserG2M {
         });
 
         // Load the webpage with content async..
-        browser.loadUrl(mainurl);
+        //browser.loadUrl(mainurl);
     }
+
+    public void SetContent(String content) {
+        //content = "<script>javascript:window.addEventListener('DOMContentLoaded', function() { " +
+        //        "setTimeout(function (){ ShowCard.showDocument(); }, 100); " +
+        //        "}, false);</script> " + content;
+        content = content.replace("\"//","\"https://");
+        browser.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
+    }
+
+    /*
+    public class ShowCardJavaScriptInterface {
+
+        @JavascriptInterface
+        public void showDocument() {
+            ((FragmentActivity)context).runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    if (viewGroup != null)
+                        viewGroup.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+    }
+    */
 }

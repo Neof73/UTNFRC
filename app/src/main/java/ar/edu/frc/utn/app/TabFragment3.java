@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,10 @@ import java.text.ParseException;
 
 public class TabFragment3 extends Fragment {
     public static final String TAG = "ERR:FRAGMENT3";
-    private ListView listView;
+    private RecyclerView listView;
     private SwipeRefreshLayout swipeContainer;
     private View layoutNoticias;
-    private FeedAdapter adapter;
+    private FeedAdapterRecycler adapter;
     private boolean loaded = false;
     private boolean visible = false;
 
@@ -49,7 +50,7 @@ public class TabFragment3 extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView = (ListView) getActivity().findViewById(R.id.lista);
+        listView = (RecyclerView) getActivity().findViewById(R.id.lista);
         swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -63,7 +64,7 @@ public class TabFragment3 extends Fragment {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected() && listView == null) {
+        if (networkInfo != null && networkInfo.isConnected() ){ //&& listView == null) {
             getRssFeed();
         } else {
             getLastRssFeed();
@@ -99,10 +100,9 @@ public class TabFragment3 extends Fragment {
     private void getLastRssFeed() {
         Log.i(TAG, "La conexión a internet no está disponible");
         swipeContainer.setRefreshing(true);
-        adapter = new FeedAdapter(
+        adapter = new FeedAdapterRecycler(
                 getContext(),
-                FeedSQLDatabase.getInstance(getContext()).obtenerEntradas(),
-                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                FeedSQLDatabase.getInstance(getContext()).obtenerEntradas());
         listView.setAdapter(adapter);
         swipeContainer.setRefreshing(false);
     }
@@ -132,7 +132,7 @@ public class TabFragment3 extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (loaded) {
-            outState.putString("courseList", "loaded");
+            outState.putString("pressList", "loaded");
         }
         outState.putBoolean("loaded", loaded);
     }
@@ -141,7 +141,7 @@ public class TabFragment3 extends Fragment {
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
-            String sLoaded = savedInstanceState.getString("courseList", "");
+            String sLoaded = savedInstanceState.getString("pressList", "");
             Boolean bLoaded = savedInstanceState.getBoolean("loaded", false);
             if (!sLoaded.isEmpty() && bLoaded) {
                 loaded = true;

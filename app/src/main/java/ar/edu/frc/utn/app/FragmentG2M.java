@@ -35,7 +35,8 @@ public class FragmentG2M  extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BrowserG2M browserG2M = new BrowserG2M(getActivity(), R.id.g2m_webview, getString(R.string.g2mUrl));
+        View view = getActivity().findViewById(R.id.g2m_webview);
+        BrowserG2M browserG2M = new BrowserG2M(getActivity(), view, getString(R.string.g2mUrl));
         browserG2M.GetContent();
     }
 
