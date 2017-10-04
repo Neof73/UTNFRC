@@ -6,6 +6,7 @@ package ar.edu.frc.utn.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -39,13 +40,13 @@ public class BrowserPress {
     private void Initialize() {
         // Enable javascript
         browser.getSettings().setJavaScriptEnabled(true);
+        browser.getSettings().setDomStorageEnabled(true);
         //Fit content to screen..
         //browser.getSettings().setLoadWithOverviewMode(true);
         //browser.getSettings().setUseWideViewPort(true);
         // Set WebView client
 
         browser.setWebChromeClient(new WebChromeClient());
-        //browser.addJavascriptInterface(new WebAppInterface(), "Android");
         //browser.addJavascriptInterface(new ShowCardJavaScriptInterface(), "ShowCard");
         browser.setWebViewClient(new WebViewClient() {
             @Override
@@ -58,9 +59,17 @@ public class BrowserPress {
             }
 
             @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (viewGroup != null)
+                   viewGroup.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url) {
-                //if (viewGroup != null)
-                //    viewGroup.setVisibility(View.VISIBLE);
+                super.onPageFinished(view, url);
+                if (viewGroup != null)
+                    viewGroup.setVisibility(View.VISIBLE);
             }
         });
 
@@ -101,7 +110,7 @@ public class BrowserPress {
         browser.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
     }
 
-    /*
+/*
     public class ShowCardJavaScriptInterface {
 
         @JavascriptInterface
@@ -116,5 +125,5 @@ public class BrowserPress {
             });
         }
     }
-    */
+*/
 }

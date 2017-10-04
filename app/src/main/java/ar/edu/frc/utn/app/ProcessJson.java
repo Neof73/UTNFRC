@@ -71,6 +71,11 @@ public class ProcessJson {
         });
     }
 
+    public void processList(ArrayList<Course> list) {
+        prepareListData(list);
+        prepareListItemClick();
+    }
+
     public void processJson(JSONObject object) {
 
         try {
@@ -93,26 +98,31 @@ public class ProcessJson {
             }
 
             prepareListData(courseList);
+            prepareListItemClick();
 
-            listview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                    Toast.makeText(
-                            v.getContext(),
-                            listDataHeader.get(groupPosition).getNombre()
-                                + " : "
-                                +listDataChild.get(
-                                    listDataHeader.get(groupPosition).getNombre()).get(
-                                        childPosition).getPresentacion(), Toast.LENGTH_SHORT)
-                            .show();
-
-                    return false;
-                }
-            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void prepareListItemClick() {
+        listview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                Toast.makeText(
+                        v.getContext(),
+                        listDataHeader.get(groupPosition).getNombre()
+                                + " : "
+                                +listDataChild.get(
+                                listDataHeader.get(groupPosition).getNombre()).get(
+                                childPosition).getPresentacion(), Toast.LENGTH_SHORT)
+                        .show();
+
+                return false;
+            }
+        });
+
     }
 
     private void prepareListData(List<Course> courseList) {

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp"
+    android:visibility="invisible"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout

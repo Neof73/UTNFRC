@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,8 @@ public class TabFragment2 extends Fragment {
     ListView listview;
     Button btnDownload;
     Boolean downloaded = false;
-    private JSONObject currentObject;
+    //private JSONObject currentObject;
+    private ArrayList<Course> currentList;
     private EditText searchText;
 
     public TabFragment2() {
@@ -72,16 +74,24 @@ public class TabFragment2 extends Fragment {
                 final String url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
 
-                if (currentObject == null) {
-                    new DownloadWebpageTask(new AsyncResult() {
+                if (currentList == null) {
+                    new GetCronograma(new AsyncResultList(){
                         @Override
-                        public void onResult(JSONObject object) {
-                            currentObject = object;
-                            proc.processJson(object);
+                        public void onResult(ArrayList<Course> list){
+                            currentList = list;
+                            proc.processList(list);
                         }
-                    }, progressDialog).execute(url);
+                    }, getContext(), progressDialog).execute("");
+                    //new DownloadWebpageTask(new AsyncResult() {
+                    //    @Override
+                    //    public void onResult(JSONObject object) {
+                    //        currentObject = object;
+                    //        proc.processJson(object);
+                    //    }
+                    //}, progressDialog).execute(url);
                 } else {
-                    proc.processJson(currentObject);
+                    proc.processList(currentList);
+                    //proc.processJson(currentObject);
                 }
             }
         });
@@ -104,8 +114,9 @@ public class TabFragment2 extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (currentObject != null) {
-            outState.putString("jsonObject", currentObject.toString());
+        if (currentList != null) {
+            String string_object = new Gson().toJson(currentList);
+            outState.putString("listObject", string_object);
             outState.putString("searchText", searchText.getText().toString());
         }
     }
@@ -114,22 +125,18 @@ public class TabFragment2 extends Fragment {
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState !=  null) {
-            try {
-                String sObject = savedInstanceState.getString("jsonObject", "").replace("\\", "");
-                if (!sObject.isEmpty()) {
-                    currentObject = new JSONObject(sObject);
-                }
-                String sSearchText = savedInstanceState.getString("searchText", "");
-                if (!sSearchText.isEmpty()) {
-                    searchText.setText(sSearchText);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            String sObject = savedInstanceState.getString("listObject", "").replace("\\", "");
+            if (!sObject.isEmpty()) {
+                currentList = new Gson().fromJson(sObject, new TypeToken<ArrayList<Course>>(){}.getType());
             }
-            if (currentObject != null) {
+            String sSearchText = savedInstanceState.getString("searchText", "");
+            if (!sSearchText.isEmpty()) {
+                searchText.setText(sSearchText);
+            }
+            if (currentList != null) {
                 View view = getActivity().findViewById(R.id.button);
                 final ProcessJson proc = new ProcessJson(getActivity());
-                proc.processJson(currentObject);
+                proc.processList(currentList);
             }
         }
     }

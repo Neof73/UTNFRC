@@ -1,6 +1,7 @@
 package ar.edu.frc.utn.app;
 
 import org.json.JSONObject;
+
 /**
  * Created by Mario Di Giorgio on 16/06/2017.
  */
@@ -8,3 +9,5 @@ import org.json.JSONObject;
 public interface AsyncResult {
     void onResult(JSONObject object);
 }
+
+

@@ -2,6 +2,7 @@ package ar.edu.frc.utn.app;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +34,12 @@ public class FeedAdapterRecycler extends  RecyclerView.Adapter<FeedAdapterRecycl
         protected WebView titulo;
         private BrowserPress descripcion;
         private TextView pubdate;
+        private CardView card;
         public FeedAdapterHolder(View itemView, Context context) {
             super(itemView);
             this.titulo = (WebView) itemView.findViewById(R.id.titulo);
-            this.descripcion = new BrowserPress(context, itemView.findViewById(R.id.descripcion), null);
+            this.card = (CardView) itemView.findViewById(R.id.card_press);
+            this.descripcion = new BrowserPress(context, itemView.findViewById(R.id.descripcion), card);
             this.pubdate = (TextView) itemView.findViewById(R.id.pubDate);
         }
     }
@@ -58,7 +61,7 @@ public class FeedAdapterRecycler extends  RecyclerView.Adapter<FeedAdapterRecycl
 
         // Setear el texto al titulo
         String titulo = FeedCursor.getString(tituloI);
-        holder.titulo.loadDataWithBaseURL("", titulo, "text/html", "UTF-8", "");
+        holder.titulo.loadDataWithBaseURL("", titulo, "text/html", "ISO-8859-1", "");
 
         String descripcion = FeedCursor.getString(descripcionI);
 
