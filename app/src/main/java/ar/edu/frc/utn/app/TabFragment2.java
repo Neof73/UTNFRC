@@ -1,48 +1,23 @@
 package ar.edu.frc.utn.app;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewGroupCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Usuario- on 20/10/2016.
@@ -69,11 +44,8 @@ public class TabFragment2 extends Fragment {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProcessJson proc = new ProcessJson(getActivity());
-                final String spreadsheetID = "1vZfLj-vfK_qgRIj3yrbM-Ya8DlvSvrfFyOOUQB1Z4_0";
-                final String url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
+                final ProcessCourses proc = new ProcessCourses(getActivity());
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-
                 if (currentList == null) {
                     new GetCronograma(new AsyncResultList(){
                         @Override
@@ -82,16 +54,8 @@ public class TabFragment2 extends Fragment {
                             proc.processList(list);
                         }
                     }, getContext(), progressDialog).execute("");
-                    //new DownloadWebpageTask(new AsyncResult() {
-                    //    @Override
-                    //    public void onResult(JSONObject object) {
-                    //        currentObject = object;
-                    //        proc.processJson(object);
-                    //    }
-                    //}, progressDialog).execute(url);
                 } else {
                     proc.processList(currentList);
-                    //proc.processJson(currentObject);
                 }
             }
         });
@@ -135,7 +99,7 @@ public class TabFragment2 extends Fragment {
             }
             if (currentList != null) {
                 View view = getActivity().findViewById(R.id.button);
-                final ProcessJson proc = new ProcessJson(getActivity());
+                final ProcessCourses proc = new ProcessCourses(getActivity());
                 proc.processList(currentList);
             }
         }

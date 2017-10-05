@@ -22,7 +22,7 @@
     <string name="play">Reproducir</string>
     <string name="pause">Pausar</string>
     <string name="loading">Cargando...</string>
-    <string name="load">Consultar</string>
+    <string name="load">Recargar</string>
     <string name="search">Buscar...</string>
     <string name="refresh">Actualizar</string>
     <string name="version">Version 1.0.1</string>
@@ -38,4 +38,10 @@
     <string name="prensaUrl">http://www.frc.utn.edu.ar/prensa</string>
     <string name="inicioUrl">http://educacionadistancia.frc.utn.edu.ar</string>
     <string name="g2mUrl">https://www.gotomeeting.com/es-es/meeting/join-meeting</string>
+    <string name="cronoLoginUrl">https://uv.frc.utn.edu.ar/login/index.php</string>
+    <string name="cronoResourceUrl">https://uv.frc.utn.edu.ar/mod/resource/view.php?id=37625</string>
+    <string name="cronoLoading">Cargando cronogramas de cursos...</string>
+    <string name="cronoData">username=aplicacionmobile&amp;password=mobile821</string>
+    <string name="cronoUnidad">Unidad</string>
+    <string name="cronoExamen">Examenes</string>
 </resources>

@@ -33,7 +33,7 @@ import static ar.edu.frc.utn.app.R.id.editText;
  * Created by Mario Di Giorgio on 16/06/2017.
  */
 
-public class ProcessJson {
+public class ProcessCourses {
     List<Anio> anioArray = new ArrayList<>();
     List<Curso> cursoArray = new ArrayList<>();
     List<Unidad> unidadArray = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ProcessJson {
     ExpandableListView listview;
     Context context;
 
-    public ProcessJson(Context context){
+    public ProcessCourses(Context context){
         this.context = context;
         this.listview = (ExpandableListView) ((MainActivity)context).findViewById(R.id.expListView) ;
         filter = (EditText) ((MainActivity)context).findViewById(R.id.search);
@@ -72,8 +72,9 @@ public class ProcessJson {
     }
 
     public void processList(ArrayList<Course> list) {
+        courseList = list;
         prepareListData(list);
-        prepareListItemClick();
+        //prepareListItemClick();
     }
 
     public void processJson(JSONObject object) {
@@ -98,14 +99,14 @@ public class ProcessJson {
             }
 
             prepareListData(courseList);
-            prepareListItemClick();
+            //prepareListItemClick();
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void prepareListItemClick() {
+    /*private void prepareListItemClick() {
         listview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -123,7 +124,7 @@ public class ProcessJson {
             }
         });
 
-    }
+    }*/
 
     private void prepareListData(List<Course> courseList) {
 

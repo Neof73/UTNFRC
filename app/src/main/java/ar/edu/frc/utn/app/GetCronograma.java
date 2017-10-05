@@ -36,8 +36,9 @@ import okhttp3.Response;
  */
 
 public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<Course>> {
-    private String urlLogin = "https://uv.frc.utn.edu.ar/login/index.php";
-    private String urlCronograma = "https://uv.frc.utn.edu.ar/mod/resource/view.php?id=37625";
+    String urlLogin;
+    String urlCronograma;
+    String loginData;
     AsyncResultList callback;
     Context context;
     ProgressDialog progress;
@@ -53,13 +54,15 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
     protected void onPreExecute(){
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setCancelable(false);
-        progress.setMessage("Cargando cronogramas de cursos...");
+        progress.setMessage(context.getString(R.string.cronoLoading));
         progress.show();
+        urlLogin = context.getString(R.string.cronoLoginUrl);
+        urlCronograma = context.getString(R.string.cronoResourceUrl);
+        loginData = context.getString(R.string.cronoData);
     }
 
     @Override
     protected ArrayList<Course> doInBackground(String... params) {
-        InputStream is = null;
         try {
 
             CookieJar cookieJar =
@@ -68,7 +71,7 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
             OkHttpClient client = new OkHttpClient.Builder().cookieJar(cookieJar).build();
 
             MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-            RequestBody body = RequestBody.create(mediaType, "username=digiorgio533&password=neof1973");
+            RequestBody body = RequestBody.create(mediaType, loginData);
             Request request = new Request.Builder()
                     .url(urlLogin)
                     .post(body)
@@ -171,9 +174,6 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
                     else {
                         cellValue = String.valueOf(myCell.getNumericCellValue());
                     }
-
-                    // Just some log information
-                    //Log.v("CELL = ", cellValue);
 
                     // Push the parsed data in the Java Object
                     // Check for cell index

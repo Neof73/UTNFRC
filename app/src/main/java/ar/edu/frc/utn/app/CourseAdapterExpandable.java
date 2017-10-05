@@ -54,7 +54,10 @@ public class CourseAdapterExpandable extends BaseExpandableListAdapter {
 
             TextView txtClases = (TextView) convertView.findViewById(R.id.clases);
             if (!childText.getClases().equals("")) {
-                txtClases.setText("Unidad: " + childText.getClases());
+                if (!childText.getClases().equals("0"))
+                    txtClases.setText(_context.getString(R.string.cronoUnidad) + ": " + childText.getClases());
+                else
+                    txtClases.setText("");
                 txtClases.setVisibility(View.VISIBLE);
             } else {
                 txtClases.setVisibility(View.GONE);
