@@ -1,37 +1,19 @@
 package ar.edu.frc.utn.app;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by Mario Di Giorgio on 16/09/2017.
@@ -42,13 +24,25 @@ public class BrowserEducacion {
     private View view;
     private String mainurl;
     private NestedWebView browser;
-    public BrowserEducacion(final FragmentActivity context, Integer view, String Url) {
+    private SwipeRefreshLayout swipe;
+    final BrowserEducacion browserEducacion;
+    public BrowserEducacion(final FragmentActivity context, Integer view, String Url, Integer swipe) {
+        this.browserEducacion = this;
         this.context = context;
         this.browser = (NestedWebView) context.findViewById(view);
         this.mainurl = Url;
+        this.swipe = (SwipeRefreshLayout) context.findViewById(swipe);
+
+        this.swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                browserEducacion.GetContent();
+            }
+        });
     }
 
     public void GetContent() {
+        swipe.setRefreshing(true);
         // Enable javascript
         browser.getSettings().setJavaScriptEnabled(true);
         //Fit content to screen..
@@ -57,15 +51,9 @@ public class BrowserEducacion {
         // Set WebView client
 
         browser.setWebChromeClient(new WebChromeClient());
-        //browser.addJavascriptInterface(new MyJavaScriptInterface(context), "HtmlViewer");
         browser.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //view.stopLoading();
-                //GetContentAsync contentAsync = new GetContentAsync();
-                //contentAsync.execute();
-                //view.loadData(content, "text/html", null
-
                 if (Uri.parse(url).getHost().equals("educacionadistancia.frc.utn.edu.ar")) {
                     // This is my web site, so do not override; let my WebView load the page
                     if (Uri.parse(url).getPath().contains("") && !Uri.parse(mainurl).getPath().contains("")) {
@@ -73,7 +61,7 @@ public class BrowserEducacion {
                         view.stopLoading();
                         viewPager.setCurrentItem(0);
                     }
-                    if (Uri.parse(url).getPath().contains("cursos") && !Uri.parse(mainurl).getPath().contains("cursos")) {
+                    if ((Uri.parse(url).getPath().contains("cursos") || Uri.parse(url).getPath().contains("courses")) && !Uri.parse(mainurl).getPath().contains("cursos")) {
                         final ViewPager viewPager = (ViewPager) context.findViewById(R.id.pager);
                         view.stopLoading();
                         viewPager.setCurrentItem(1);
@@ -102,8 +90,8 @@ public class BrowserEducacion {
                         "document.getElementsByClassName('menu-mobile-effect navbar-toggle')[0].style.display='none'; " +
                         "})()");
 
+                swipe.setRefreshing(false);
             }
-
         });
 
         browser.setOnKeyListener(new View.OnKeyListener()

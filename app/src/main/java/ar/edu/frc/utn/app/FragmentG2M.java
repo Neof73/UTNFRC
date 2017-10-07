@@ -3,6 +3,7 @@ package ar.edu.frc.utn.app;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,8 @@ public class FragmentG2M  extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View view = getActivity().findViewById(R.id.g2m_webview);
-        BrowserG2M browserG2M = new BrowserG2M(getActivity(), view, getString(R.string.g2mUrl));
+        SwipeRefreshLayout swipe = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeG2M);
+        BrowserG2M browserG2M = new BrowserG2M(getActivity(), view, getString(R.string.g2mUrl), swipe);
         browserG2M.GetContent();
     }
 

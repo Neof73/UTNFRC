@@ -35,7 +35,7 @@ public class FragmentCursos extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BrowserEducacion browserEducacion = new BrowserEducacion(getActivity(), R.id.cursos_webview, getString(R.string.cursosUrl));
+        BrowserEducacion browserEducacion = new BrowserEducacion(getActivity(), R.id.cursos_webview, getString(R.string.cursosUrl), R.id.swipeCursos);
         browserEducacion.GetContent();
 
         /*

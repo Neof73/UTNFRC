@@ -3,7 +3,7 @@ package ar.edu.frc.utn.app;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -15,7 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.jsoup.select.Evaluator;
+import org.jsoup.select.Collector;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,24 +41,28 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
     String loginData;
     AsyncResultList callback;
     Context context;
-    ProgressDialog progress;
-    ArrayList<Course> CourseList = new ArrayList<Course>();;
+    //ProgressDialog progress;
+    SwipeRefreshLayout swipe;
+    ArrayList<Course> CourseList;
 
-    public GetCronograma(AsyncResultList callback, Context context, ProgressDialog progressDialog) {
+    public GetCronograma(AsyncResultList callback, Context context, /*ProgressDialog progressDialog*/SwipeRefreshLayout swipe) {
         this.callback = callback;
         this.context = context;
-        this.progress = progressDialog;
+        //this.progress = progressDialog;
+        this.swipe = swipe;
     }
 
     @Override
     protected void onPreExecute(){
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setCancelable(false);
-        progress.setMessage(context.getString(R.string.cronoLoading));
-        progress.show();
+        //progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //progress.setCancelable(false);
+        //progress.setMessage(context.getString(R.string.cronoLoading));
+        //progress.show();
+        swipe.setRefreshing(true);
         urlLogin = context.getString(R.string.cronoLoginUrl);
         urlCronograma = context.getString(R.string.cronoResourceUrl);
         loginData = context.getString(R.string.cronoData);
+        CourseList = new ArrayList<Course>();
     }
 
     @Override
@@ -106,7 +110,8 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
         } catch (Exception e) {
             e.printStackTrace();
         }
-        progress.dismiss();
+        //progress.dismiss();
+        swipe.setRefreshing(false);
     }
 
 
@@ -205,6 +210,8 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
                             break;
                         case 6:
                             docente = cellValue;
+                            if (docente.equals(""))
+                                docente = fecha;
                             break;
                         case 8:
                             email = cellValue;
@@ -216,8 +223,36 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
                 }
 
                 if (anio.intValue() > 0) {
-                    // Add object to list
-                    CourseList.add(new Course((id++).toString(), fecha, anio.toString(), tipo, nombre, clases, presentacion, docente, email));
+                    boolean itemAnio = false;
+                    for (Course item: CourseList) {
+                        if (item.getAnio().equals(anio.toString())) {
+                            itemAnio = true;
+                            break;
+                        }
+                    }
+                    if (!itemAnio) {
+                        CourseList.add(new Course(anio.toString(), "", "", ""));
+                    }
+
+                    if (!nombre.equals("")) {
+                        Course course = new Course(anio.toString(), nombre, docente, email);
+                        Clase claseItem = new Clase((id++).toString(), fecha, tipo, clases, presentacion);
+                        Course courseItem = null;
+                        for (Course item : CourseList) {
+                            if (item.getAnio().equals(anio.toString()) && item.getNombre().equals(nombre)) {
+                                courseItem = item;
+                                break;
+                            }
+                        }
+                        //ArrayList<Course> items  = CourseList.stream().filter(p -> p.getNombre().equals(nombre)).collect(Collectors.<Course>toList());
+                        if (courseItem != null) {
+                            courseItem.clase.add(claseItem);
+                        } else {
+                            if (!presentacion.equals(""))
+                                course.clase.add(claseItem);
+                            CourseList.add(course);
+                        }
+                    }
                 }
             }
         }

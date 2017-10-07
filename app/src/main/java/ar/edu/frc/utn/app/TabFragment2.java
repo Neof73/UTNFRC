@@ -3,6 +3,7 @@ package ar.edu.frc.utn.app;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,10 @@ public class TabFragment2 extends Fragment {
     ListView listview;
     Button btnDownload;
     Boolean downloaded = false;
-    //private JSONObject currentObject;
     private ArrayList<Course> currentList;
     private EditText searchText;
-
+    public ProcessCourses proc;
+    public SwipeRefreshLayout swipe;
     public TabFragment2() {
         // Required empty public constructor
     }
@@ -38,25 +39,29 @@ public class TabFragment2 extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        proc = new ProcessCourses(getActivity());
         listview = (ExpandableListView) getActivity().findViewById(R.id.expListView);
         searchText = (EditText) getActivity().findViewById(R.id.search);
         btnDownload = (Button) getActivity().findViewById(R.id.button);
+        swipe = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeCrono);
+
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProcessCourses proc = new ProcessCourses(getActivity());
-                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                if (currentList == null) {
-                    new GetCronograma(new AsyncResultList(){
-                        @Override
-                        public void onResult(ArrayList<Course> list){
-                            currentList = list;
-                            proc.processList(list);
-                        }
-                    }, getContext(), progressDialog).execute("");
-                } else {
-                    proc.processList(currentList);
-                }
+                //final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                new GetCronograma(new AsyncResultList(){
+                    @Override
+                    public void onResult(ArrayList<Course> list){
+                        currentList = list;
+                        proc.processList(list);
+                    }
+                }, getContext(), /*progressDialog*/swipe).execute("");
+            }
+        });
+        this.swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                btnDownload.callOnClick();
             }
         });
 
@@ -66,6 +71,14 @@ public class TabFragment2 extends Fragment {
             btnDownload.setEnabled(true);
         } else {
             btnDownload.setEnabled(false);
+        }
+    }
+
+    private void UpdateCronograma() {
+        if (currentList == null) {
+            btnDownload.callOnClick();
+        } else {
+            proc.processList(currentList);
         }
     }
 
@@ -98,8 +111,6 @@ public class TabFragment2 extends Fragment {
                 searchText.setText(sSearchText);
             }
             if (currentList != null) {
-                View view = getActivity().findViewById(R.id.button);
-                final ProcessCourses proc = new ProcessCourses(getActivity());
                 proc.processList(currentList);
             }
         }
@@ -109,8 +120,7 @@ public class TabFragment2 extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !downloaded) {
-            btnDownload.callOnClick();
-            downloaded = true;
+            UpdateCronograma();
         }
     }
 }

@@ -76,6 +76,7 @@ public class CourseAdapter extends BaseAdapter {
             docente.setVisibility(View.GONE);
         }
 
+        /*
         if (!this.courseList.get(position).getClases().equals("")) {
             TextView clases = (TextView) view.findViewById(R.id.clases);
             clases.setText("Unidad: " + this.courseList.get(position).getClases());
@@ -92,7 +93,6 @@ public class CourseAdapter extends BaseAdapter {
             presentacion.setVisibility(View.GONE);
         }
 
-
         if (!this.courseList.get(position).getFecha().equals("")) {
             TextView fecha = (TextView) view.findViewById(R.id.fecha);
             fecha.setText("Fecha: " + this.courseList.get(position).getFecha());
@@ -100,7 +100,7 @@ public class CourseAdapter extends BaseAdapter {
             TextView fecha = (TextView) view.findViewById(R.id.fecha);
             fecha.setText("");
         }
-
+*/
         return view;
     }
 }

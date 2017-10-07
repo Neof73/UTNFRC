@@ -34,18 +34,9 @@ import static ar.edu.frc.utn.app.R.id.editText;
  */
 
 public class ProcessCourses {
-    List<Anio> anioArray = new ArrayList<>();
-    List<Curso> cursoArray = new ArrayList<>();
-    List<Unidad> unidadArray = new ArrayList<>();
-    List<Clase> clasesArray = new ArrayList<>();
-    List<String> fechaArray = new ArrayList<>();
-
-    List<Course> listDataHeader;
-    HashMap<String, List<Course>> listDataChild;
+    ArrayList<Course> listDataHeader;
     EditText filter;
-
-    ArrayList<Course> courseArray = new ArrayList<Course>();
-    List<Course> courseList = new ArrayList<>();
+    ArrayList<Course> courseList = new ArrayList<>();
     ExpandableListView listview;
     Context context;
 
@@ -74,59 +65,9 @@ public class ProcessCourses {
     public void processList(ArrayList<Course> list) {
         courseList = list;
         prepareListData(list);
-        //prepareListItemClick();
     }
 
-    public void processJson(JSONObject object) {
-
-        try {
-            JSONArray rows = object.getJSONArray("entry");
-
-            for (int r = 0; r < rows.length(); ++r) {
-                JSONObject row = rows.getJSONObject(r);
-
-                String fecha = (new JSONObject(row.getString("gsx$fecha"))).getString("$t");
-                String anio = (new JSONObject(row.getString("gsx$año"))).getString("$t");
-                String tipo = (new JSONObject(row.getString("gsx$tipo"))).getString("$t");
-                String nombre = (new JSONObject(row.getString("gsx$nombre"))).getString("$t");
-                String clases = (new JSONObject(row.getString("gsx$clases"))).getString("$t");
-                String presentacion = (new JSONObject(row.getString("gsx$presentación"))).getString("$t");
-                String docente = (new JSONObject(row.getString("gsx$docente"))).getString("$t");
-                String email = (new JSONObject(row.getString("gsx$email"))).getString("$t");
-
-                Course course = new Course("", fecha, anio, tipo, nombre, clases, presentacion, docente, email);
-                courseList.add(course);
-            }
-
-            prepareListData(courseList);
-            //prepareListItemClick();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*private void prepareListItemClick() {
-        listview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                Toast.makeText(
-                        v.getContext(),
-                        listDataHeader.get(groupPosition).getNombre()
-                                + " : "
-                                +listDataChild.get(
-                                listDataHeader.get(groupPosition).getNombre()).get(
-                                childPosition).getPresentacion(), Toast.LENGTH_SHORT)
-                        .show();
-
-                return false;
-            }
-        });
-
-    }*/
-
-    private void prepareListData(List<Course> courseList) {
+    private void prepareListData(ArrayList<Course> courseList) {
 
         Collections.sort(courseList, new Comparator<Course>() {
             @Override
@@ -135,64 +76,20 @@ public class ProcessCourses {
             }
         });
 
+
         listDataHeader = new ArrayList<Course>();
-        listDataChild = new HashMap<String, List<Course>>();
-
-        Integer headerID = 0;
-        String anio = "";
-        String name = "";
-        //String pres = "";
-        String unid = "";
-        List<Course> dataChild = null;
-        for (int i = 0; i < courseList.size(); i++) {
-            Course course = courseList.get(i);
-            if (!course.getAnio().equals(anio)) {
-                anio = course.getAnio();
-                name = "";
-                unid = "";
-                Course couAnio = new Course(anio, "", anio, "", "", "", "", "", "");
-                listDataHeader.add(couAnio);
-                dataChild = new ArrayList<Course>();
-                listDataChild.put(name, dataChild);
-            }
-
+        for (Course course : courseList) {
             if (course.getNombre().toLowerCase().contains(filter.getText().toString().toLowerCase()) ||
                     course.getDocente().toLowerCase().contains(filter.getText().toString().toLowerCase())) {
-
-
-                if (!course.getNombre().equals(name)) {
-                    headerID++;
-                    name = course.getNombre();
-                    unid = course.getClases();
-                    Course couName = new Course(
-                            anio + "_" + headerID,
-                            course.getFecha(),
-                            "", //course.getAnio(),
-                            course.getTipo(),
-                            course.getNombre(),
-                            course.getClases(),
-                            course.getPresentacion(),
-                            course.getDocente(),
-                            course.getEmail());
-                    listDataHeader.add(couName);
-                    dataChild = new ArrayList<Course>();
-                    listDataChild.put(anio + "_" + headerID, dataChild);
-                    if (!course.getPresentacion().equals(""))
-                        dataChild.add(course);
-                } else {
-                    if (course.getClases().equals(unid)) {
-                        course.setClases("");
-                    } else {
-                        unid = course.getClases();
-                    }
-                    if (!course.getPresentacion().equals("") && dataChild != null)
-                        dataChild.add(course);
-                }
+                listDataHeader.add(course);
+            } else if (course.getNombre().equals("") && !course.getAnio().equals("")) {
+                listDataHeader.add(course);
             }
         }
 
-        final CourseAdapterExpandable adapter = new CourseAdapterExpandable(context, listDataHeader, listDataChild);
+        final CourseAdapterExpandable adapter = new CourseAdapterExpandable(context, listDataHeader);
         listview.setAdapter(adapter);
 
     }
+
 }

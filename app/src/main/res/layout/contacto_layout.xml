@@ -6,6 +6,11 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContacto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ar.edu.frc.utn.app.NestedWebView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/contacto_webview"
@@ -17,4 +22,5 @@
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

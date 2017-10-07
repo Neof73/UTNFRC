@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.KeyEvent;
@@ -27,34 +28,46 @@ import java.io.IOException;
 
 public class BrowserG2M {
     private Context context;
-    private View view;
     private String mainurl;
     private NestedWebView browser;
-    private ViewGroup viewGroup;
-    public BrowserG2M(final Context context, View view, String Url) {
+    private SwipeRefreshLayout swipe;
+    final BrowserG2M browserG2M;
+    public BrowserG2M(final Context context, View view, String Url, SwipeRefreshLayout swipe) {
         this.context = context;
         this.browser = (NestedWebView) view;
         this.mainurl = Url;
+        this.browserG2M = this;
+        this.swipe = swipe;
+        this.swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                browserG2M.GetContent();
+            }
+        });
+
     }
 
     public void GetContent() {
+        swipe.setRefreshing(true);
         // Enable javascript
         browser.getSettings().setJavaScriptEnabled(true);
         //Fit content to screen..
         browser.getSettings().setLoadWithOverviewMode(true);
         browser.getSettings().setUseWideViewPort(true);
         // Set WebView client
-
         browser.setWebChromeClient(new WebChromeClient());
-        //browser.addJavascriptInterface(new WebAppInterface(), "Android");
         browser.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
-                //return false;
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 context.startActivity(intent);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                swipe.setRefreshing(false);
             }
         });
 

@@ -36,7 +36,7 @@ public class FragmentContacto extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        BrowserEducacion browserEducacion = new BrowserEducacion(getActivity(), R.id.contacto_webview, getString(R.string.contactoUrl));
+        BrowserEducacion browserEducacion = new BrowserEducacion(getActivity(), R.id.contacto_webview, getString(R.string.contactoUrl), R.id.swipeContacto);
         browserEducacion.GetContent();
 
     }

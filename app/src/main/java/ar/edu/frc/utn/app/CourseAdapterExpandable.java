@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,26 +18,20 @@ import java.util.List;
 
 public class CourseAdapterExpandable extends BaseExpandableListAdapter {
         private Context _context;
-        private List<Course> _listDataHeader; // header titles
-        // child data in format of header title, child title
-        private HashMap<String, List<Course>> _listDataChild;
+        private ArrayList<Course> _listDataHeader;
 
-        public CourseAdapterExpandable(Context context, List<Course> listDataHeader,
-                                     HashMap<String, List<Course>> listChildData) {
+        public CourseAdapterExpandable(Context context, ArrayList<Course> listDataHeader) {
             this._context = context;
             this._listDataHeader = listDataHeader;
-            this._listDataChild = listChildData;
         }
 
         @Override
         public Object getChild(int groupPosition, int childPosititon) {
-            return this._listDataChild.get(this._listDataHeader.get(groupPosition).getId())
-                    .get(childPosititon);
+            return this._listDataHeader.get(groupPosition).clase.get(childPosititon);
         }
 
         @Override
         public long getChildId(int groupPosition, int childPosition) {
-
             return childPosition;
         }
 
@@ -44,7 +39,8 @@ public class CourseAdapterExpandable extends BaseExpandableListAdapter {
         public View getChildView(int groupPosition, final int childPosition,
                                  boolean isLastChild, View convertView, ViewGroup parent) {
 
-            final Course childText = (Course) getChild(groupPosition, childPosition);
+            final Course groupText = this._listDataHeader.get(groupPosition);
+            final Clase childText = groupText.clase.get(childPosition);
 
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -73,8 +69,7 @@ public class CourseAdapterExpandable extends BaseExpandableListAdapter {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return this._listDataChild.get(this._listDataHeader.get(groupPosition).getId())
-                    .size();
+            return this._listDataHeader.get(groupPosition).clase.size();
         }
 
         @Override
@@ -105,13 +100,13 @@ public class CourseAdapterExpandable extends BaseExpandableListAdapter {
             TextView lblListHeader = (TextView) convertView
                     .findViewById(R.id.lblListHeader);
             lblListHeader.setTypeface(null, Typeface.BOLD);
-            String headerTitleString = headerTitle.getAnio();
-            if (headerTitleString.equals("")) {
-                headerTitleString = headerTitle.getNombre();
+            String headerTitleString = headerTitle.getNombre();
+            if (!headerTitleString.equals("")) {
                 lblListHeader.setTextSize(17);
                 lblListHeader.setTextColor(convertView.getResources().getColor(R.color.colorTitle));
                 lblListHeader.setBackgroundColor(convertView.getResources().getColor(R.color.colorDisabled));
             } else {
+                headerTitleString = headerTitle.getAnio();
                 lblListHeader.setTextSize(32);
                 lblListHeader.setTextColor(convertView.getResources().getColor(R.color.colorAccent));
                 lblListHeader.setBackgroundColor(convertView.getResources().getColor(R.color.color));
@@ -122,8 +117,8 @@ public class CourseAdapterExpandable extends BaseExpandableListAdapter {
                     .findViewById(R.id.docente);
 
             String strDocente = headerTitle.getDocente();
-            if (strDocente.equals(""))
-                strDocente = headerTitle.getFecha();
+            //if (strDocente.equals(""))
+            //    strDocente = headerTitle.getFecha();
             lblDocente.setText(strDocente);
             return convertView;
         }
@@ -135,7 +130,7 @@ public class CourseAdapterExpandable extends BaseExpandableListAdapter {
 
         @Override
         public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return true;
+            return false;
         }
     }
 

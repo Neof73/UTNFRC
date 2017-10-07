@@ -27,6 +27,7 @@
             android:layout_marginStart="19dp"
             android:layout_toEndOf="@+id/search"
             android:layout_weight="1"
+            android:visibility="invisible"
             android:text="@string/load" />
 
     </LinearLayout>
@@ -37,11 +38,18 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout">
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeCrono"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <ExpandableListView
             android:id="@+id/expListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="true">
         </ExpandableListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 </LinearLayout>

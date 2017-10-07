@@ -32,6 +32,9 @@ android {
     packagingOptions {
         pickFirst  'META-INF/LICENSE'
     }
+    dexOptions {
+        jumboMode true
+    }
 }
 
 dependencies {
