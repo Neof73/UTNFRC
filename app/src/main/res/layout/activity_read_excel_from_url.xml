@@ -36,11 +36,13 @@
         android:id="@+id/layoutListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_below="@+id/linearLayout">
 
         <android.support.v4.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipeCrono"
+            android:minHeight="300dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -51,5 +53,11 @@
             android:nestedScrollingEnabled="true">
         </ExpandableListView>
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@android:id/empty"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
     </LinearLayout>
 </LinearLayout>

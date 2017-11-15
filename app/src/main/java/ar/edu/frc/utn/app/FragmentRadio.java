@@ -1,10 +1,17 @@
 package ar.edu.frc.utn.app;
 
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +35,7 @@ public class FragmentRadio extends Fragment {
     private static String strLoading;
     private static String strPause;
     private static String strPlay;
+    private final static int NOTIFICATION_ID = 1234;
 
     public FragmentRadio() {
         //NADA!
@@ -139,5 +147,39 @@ public class FragmentRadio extends Fragment {
                 break;
             }
         }
+        setNotification(status);
+
     }
+
+    private void setNotification(mediaStatus status)
+    {
+        switch (status) {
+            case STARTED: {
+                getActivity().registerReceiver(stopServiceReceiver, new IntentFilter("myFilter"));
+                PendingIntent contentIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent("myFilter"), PendingIntent.FLAG_UPDATE_CURRENT);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
+                        .setSmallIcon(R.drawable.radio)
+                        .setContentTitle(getString(R.string.radionotifytitle))
+                        .setContentText(getString(R.string.radionotifytext))
+                        .setContentIntent(contentIntent);
+                NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(NOTIFICATION_ID, builder.build());
+                break;
+            }
+            default: {
+                NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(NOTIFICATION_ID);
+                break;
+            }
+        }
+    }
+
+    //We need to declare the receiver with onReceive function as below
+    protected BroadcastReceiver stopServiceReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            play.callOnClick();
+        }
+    };
 }

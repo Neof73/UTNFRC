@@ -85,6 +85,15 @@ public class BrowserNoticias {
                 //view.setVisibility(View.VISIBLE);
             }
 
+            @Override
+            public void onReceivedError(final WebView view, int errorCode, String description,
+                                        final String failingUrl) {
+                //control you layout, show something like a retry button, and
+                //call view.loadUrl(failingUrl) to reload.
+                view.loadData("<div style='display:inline-block;text-align:center;'><h1>Problemas de conexión, reintente mas tarde...</h1></div>", "text/html", "UTF-8");
+                super.onReceivedError(view, errorCode, description, failingUrl);
+            }
+
         });
 
         browser.setOnKeyListener(new View.OnKeyListener()

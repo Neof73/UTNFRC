@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -19,10 +20,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean permisionOk;
     private boolean permisionCamOk;
     private boolean permisionINTOk;
+    private boolean doubleBackToExitPressedOnce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,25 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    @Override
+    public void onBackPressed(){
+        if (doubleBackToExitPressedOnce  || getSupportFragmentManager().getBackStackEntryCount() != 0) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.doubleback), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 3000);
     }
 
     public void acercaDe(View view) {

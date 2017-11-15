@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UTN FRC</string>
+    <string name="app_name">UTN FRC - Educación a Distancia</string>
     <string name="app_title">Universidad Tecnológica Nacional</string>
     <string name="app_subtitle">Facultad Regional Córdoba</string>
     <string name="app_subtitle2">SEU Area Educación a Distancia</string>
@@ -26,7 +26,7 @@
     <string name="search">Buscar...</string>
     <string name="refresh">Actualizar</string>
     <string name="version">Version 1.0.1</string>
-    <string name="utnfrc">UTN - FRC</string>
+    <string name="utnfrc">UTN - FRC - Educación a Distancia.</string>
     <string name="utnfrc_email"><a href="mailto:prensa@extension.frc.utn.edu.ar">Contacto</a></string>
     <string name="utnfrc_website"><a href="http://uv.frc.utn.edu.ar">Sitio Web</a></string>
     <string name="utnfrc_descripcion">Aplicación creada para la Universidad Tecnológica Nacional - Facultad Regional Córdoba - Departamento de Educación a Distancia.\n 2017 \u00A9 Copyright. Todos los derechos reservados.</string>
@@ -44,4 +44,7 @@
     <string name="cronoData">username=aplicacionmobile&amp;password=mobile821</string>
     <string name="cronoUnidad">Unidad</string>
     <string name="cronoExamen">Examenes</string>
+    <string name="doubleback">Presione nuevamente back para salir...</string>
+    <string name="radionotifytitle">UTNFRC - Radio Streaming</string>
+    <string name="radionotifytext">Se está reproduciendo radio FM 94.3 - Radio UTN</string>
 </resources>

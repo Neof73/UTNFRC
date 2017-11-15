@@ -41,6 +41,7 @@ public class TabFragment2 extends Fragment {
         super.onActivityCreated(savedInstanceState);
         proc = new ProcessCourses(getActivity());
         listview = (ExpandableListView) getActivity().findViewById(R.id.expListView);
+        listview.setEmptyView(getActivity().findViewById(android.R.id.empty));
         searchText = (EditText) getActivity().findViewById(R.id.search);
         btnDownload = (Button) getActivity().findViewById(R.id.button);
         swipe = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeCrono);
