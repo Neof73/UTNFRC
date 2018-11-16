@@ -90,7 +90,7 @@ public class BrowserNoticias {
                                         final String failingUrl) {
                 //control you layout, show something like a retry button, and
                 //call view.loadUrl(failingUrl) to reload.
-                view.loadData("<div style='display:inline-block;text-align:center;'><h1>Problemas de conexión, reintente mas tarde...</h1></div>", "text/html", "UTF-8");
+                view.loadData("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><div style='display:inline-block;text-align:center;border: 2px solid #fc9a02;padding:15px;'><h1 style='font-size:24px;color:grey;'>Problemas de conexión, reintente mas tarde...</h1></div>", "text/html; charset=utf-8", "UTF-8");
                 super.onReceivedError(view, errorCode, description, failingUrl);
             }
 

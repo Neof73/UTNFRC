@@ -1,44 +1,25 @@
 package ar.edu.frc.utn.app;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Parcelable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int USUARIO_LOGIN = 1234;
     private static final int INTERNET_REQUEST = 2222;
     private static final int NETWORKSTATE_REQUEST = 3333;
-    private boolean permisionRESOk;
-    private boolean permisionWESOk;
-    private boolean permisionOk;
-    private boolean permisionCamOk;
-    private boolean permisionINTOk;
     private boolean doubleBackToExitPressedOnce;
 
     @Override
@@ -54,16 +35,12 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.INTERNET}, INTERNET_REQUEST);
             }
-        } else {
-            permisionINTOk = true;
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, NETWORKSTATE_REQUEST);
             }
-        } else {
-            permisionINTOk = true;
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -127,20 +104,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void loginUsuario(View view) {
-        Intent login = new Intent(this, UsuarioActivity.class);
-        startActivityForResult(login, USUARIO_LOGIN);
-    }
-
-    @Override
-    protected void onActivityResult(int requetCode, int resultCode, Intent intentRes) {
-        if (requetCode == USUARIO_LOGIN && resultCode == RESULT_OK) {
-            String usuario = intentRes.getExtras().getString("usuario");
-            String pass = intentRes.getExtras().getString("password");
-            //TODO - llamar a un servicio que me loguee el usuario...
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -155,10 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 acercaDe(null);
                 return true;
             }
-            /*case R.id.menu_login: {
-                loginUsuario(null);
-                return true;
-            }*/
             case R.id.menu_salir: {
                 finish();
                 return true;

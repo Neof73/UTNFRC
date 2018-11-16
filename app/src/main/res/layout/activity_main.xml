@@ -28,7 +28,7 @@
                 android:layout_height="60dp"
                 android:layout_alignParentTop="true"
                 android:title=""
-                android:logo="@drawable/logoutn2"
+                android:logo="@drawable/logoutn5"
                 android:background="@color/colorPrimaryDark"
                 app:layout_scrollFlags="scroll|snap"
                 app:layout_collapseMode="none"

@@ -57,7 +57,6 @@ public class CourseAdapter extends BaseAdapter {
             anio.setVisibility(View.GONE);
         }
 
-
         if (!this.courseList.get(position).getNombre().equals("")) {
 
             TextView titulo = (TextView) view.findViewById(R.id.titulo);
@@ -75,32 +74,6 @@ public class CourseAdapter extends BaseAdapter {
             TextView docente = (TextView) view.findViewById(R.id.docente);
             docente.setVisibility(View.GONE);
         }
-
-        /*
-        if (!this.courseList.get(position).getClases().equals("")) {
-            TextView clases = (TextView) view.findViewById(R.id.clases);
-            clases.setText("Unidad: " + this.courseList.get(position).getClases());
-        } else {
-            TextView clases = (TextView) view.findViewById(R.id.clases);
-            clases.setVisibility(View.GONE);
-        }
-
-        if (!this.courseList.get(position).getPresentacion().equals("")) {
-            TextView presentacion = (TextView) view.findViewById(R.id.presentacion);
-            presentacion.setText(this.courseList.get(position).getPresentacion());
-        } else {
-            TextView presentacion = (TextView) view.findViewById(R.id.presentacion);
-            presentacion.setVisibility(View.GONE);
-        }
-
-        if (!this.courseList.get(position).getFecha().equals("")) {
-            TextView fecha = (TextView) view.findViewById(R.id.fecha);
-            fecha.setText("Fecha: " + this.courseList.get(position).getFecha());
-        } else {
-            TextView fecha = (TextView) view.findViewById(R.id.fecha);
-            fecha.setText("");
-        }
-*/
-        return view;
+       return view;
     }
 }

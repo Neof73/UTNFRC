@@ -22,7 +22,6 @@
             android:name=".AcercaDeActivity"
             android:label="@string/acerca_de"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".UsuarioActivity" />
         <activity android:name=".GalleryActivity" />
         <activity android:name=".ImageActivity" />
     </application>

@@ -15,12 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.jsoup.select.Collector;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -41,23 +37,17 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
     String loginData;
     AsyncResultList callback;
     Context context;
-    //ProgressDialog progress;
     SwipeRefreshLayout swipe;
     ArrayList<Course> CourseList;
 
     public GetCronograma(AsyncResultList callback, Context context, /*ProgressDialog progressDialog*/SwipeRefreshLayout swipe) {
         this.callback = callback;
         this.context = context;
-        //this.progress = progressDialog;
         this.swipe = swipe;
     }
 
     @Override
     protected void onPreExecute(){
-        //progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        //progress.setCancelable(false);
-        //progress.setMessage(context.getString(R.string.cronoLoading));
-        //progress.show();
         swipe.setRefreshing(true);
         urlLogin = context.getString(R.string.cronoLoginUrl);
         urlCronograma = context.getString(R.string.cronoResourceUrl);
@@ -110,35 +100,12 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //progress.dismiss();
         swipe.setRefreshing(false);
     }
 
-
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
-
-    private void parseExcel(InputStream fis){
-
+    private void parseExcel(InputStream fis)
+    {
         try{
-
             // Create a workbook using the Input Stream
             HSSFWorkbook myWorkBook = new HSSFWorkbook(fis);
 
@@ -148,117 +115,117 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
             // We now need something to iterate through the cells
             Iterator<Row> rowIter = mySheet.rowIterator();
             Integer id = 0;
-            while(rowIter.hasNext()){
-
-                HSSFRow myRow = (HSSFRow) rowIter.next();
-                // Skip the first 3 rows
-                if(myRow.getRowNum() < 3) {
-                    continue;
-                }
-
-                String fecha = "";
-                Integer anio = 0;
-                String tipo = "";
-                String nombre = "";
-                String clases = "";
-                String presentacion = "";
-                String docente = "";
-                String email = "";
-                Iterator<Cell> cellIter = myRow.cellIterator();
-                while(cellIter.hasNext()){
-
-                    HSSFCell myCell = (HSSFCell) cellIter.next();
-                    String cellValue = "";
-
-                    // Check for cell Type
-                    if(myCell.getCellType() == HSSFCell.CELL_TYPE_STRING){
-                        cellValue = myCell.getStringCellValue();
-                    } else if(myCell.getCellType() == HSSFCell.CELL_TYPE_BLANK){
-                        cellValue = myCell.getStringCellValue();
-                    }
-                    else {
-                        cellValue = String.valueOf(myCell.getNumericCellValue());
+            while (rowIter.hasNext()) {
+                try {
+                    HSSFRow myRow = (HSSFRow) rowIter.next();
+                    // Skip the first 3 rows
+                    if (myRow.getRowNum() < 3) {
+                        continue;
                     }
 
-                    // Push the parsed data in the Java Object
-                    // Check for cell index
-                    switch (myCell.getColumnIndex()) {
-                        case 0:
-                            fecha = cellValue;
-                            break;
-                        case 1:
-                            if (cellValue==""){
-                                cellValue = "0";
-                            }
-                            anio = (int)(Double.parseDouble(cellValue));
-                            break;
-                        case 2:
-                            tipo = cellValue;
-                            break;
-                        case 3:
-                            nombre = cellValue;
-                            break;
-                        case 4:
-                            if (cellValue==""){
-                                cellValue = "0";
-                            }
-                            Integer cl = (int)(Double.parseDouble(cellValue));
-                            clases = cl.toString();
-                            break;
-                        case 5:
-                            presentacion = cellValue;
-                            break;
-                        case 6:
-                            docente = cellValue;
-                            if (docente.equals(""))
-                                docente = fecha;
-                            break;
-                        case 8:
-                            email = cellValue;
-                            break;
-                        default:
-                            break;
-                    }
+                    String fecha = "";
+                    Integer anio = 0;
+                    String tipo = "";
+                    String nombre = "";
+                    String clases = "";
+                    String presentacion = "";
+                    String docente = "";
+                    String email = "";
+                    Iterator<Cell> cellIter = myRow.cellIterator();
+                    while (cellIter.hasNext()) {
 
-                }
+                        HSSFCell myCell = (HSSFCell) cellIter.next();
+                        String cellValue = "";
 
-                if (anio.intValue() > 0) {
-                    boolean itemAnio = false;
-                    for (Course item: CourseList) {
-                        if (item.getAnio().equals(anio.toString())) {
-                            itemAnio = true;
-                            break;
+                        // Check for cell Type
+                        if (myCell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                            cellValue = myCell.getStringCellValue();
+                        } else if (myCell.getCellType() == HSSFCell.CELL_TYPE_BLANK) {
+                            cellValue = myCell.getStringCellValue();
+                        } else {
+                            cellValue = String.valueOf(myCell.getNumericCellValue());
+                        }
+
+                        // Push the parsed data in the Java Object
+                        // Check for cell index
+                        switch (myCell.getColumnIndex()) {
+                            case 0:
+                                fecha = cellValue;
+                                break;
+                            case 1:
+                                if (cellValue == "") {
+                                    cellValue = "0";
+                                }
+                                anio = (int) (Double.parseDouble(cellValue));
+                                break;
+                            case 2:
+                                tipo = cellValue;
+                                break;
+                            case 3:
+                                nombre = cellValue;
+                                break;
+                            case 4:
+                                if (cellValue == "") {
+                                    cellValue = "0";
+                                }
+                                Integer cl = (int) (Double.parseDouble(cellValue));
+                                clases = cl.toString();
+                                break;
+                            case 5:
+                                presentacion = cellValue;
+                                break;
+                            case 6:
+                                docente = cellValue;
+                                if (docente.equals(""))
+                                    docente = fecha;
+                                break;
+                            case 8:
+                                email = cellValue;
+                                break;
+                            default:
+                                break;
                         }
                     }
-                    if (!itemAnio) {
-                        CourseList.add(new Course(anio.toString(), "", "", ""));
-                    }
 
-                    if (!nombre.equals("")) {
-                        Course course = new Course(anio.toString(), nombre, docente, email);
-                        Clase claseItem = new Clase((id++).toString(), fecha, tipo, clases, presentacion);
-                        Course courseItem = null;
+                    if (anio.intValue() > 0) {
+                        boolean itemAnio = false;
                         for (Course item : CourseList) {
-                            if (item.getAnio().equals(anio.toString()) && item.getNombre().equals(nombre)) {
-                                courseItem = item;
+                            if (item.getAnio().equals(anio.toString())) {
+                                itemAnio = true;
                                 break;
                             }
                         }
-                        //ArrayList<Course> items  = CourseList.stream().filter(p -> p.getNombre().equals(nombre)).collect(Collectors.<Course>toList());
-                        if (courseItem != null) {
-                            courseItem.clase.add(claseItem);
-                        } else {
-                            if (!presentacion.equals(""))
-                                course.clase.add(claseItem);
-                            CourseList.add(course);
+                        if (!itemAnio) {
+                            CourseList.add(new Course(anio.toString(), "", "", ""));
+                        }
+
+                        if (!nombre.equals("")) {
+                            Course course = new Course(anio.toString(), nombre, docente, email);
+                            Clase claseItem = new Clase((id++).toString(), fecha, tipo, clases, presentacion);
+                            Course courseItem = null;
+                            for (Course item : CourseList) {
+                                if (item.getAnio().equals(anio.toString()) && item.getNombre().equals(nombre)) {
+                                    courseItem = item;
+                                    break;
+                                }
+                            }
+                            if (courseItem != null) {
+                                courseItem.clase.add(claseItem);
+                            } else {
+                                if (!presentacion.equals(""))
+                                    course.clase.add(claseItem);
+                                CourseList.add(course);
+                            }
                         }
                     }
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }

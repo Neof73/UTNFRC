@@ -9,14 +9,14 @@ android {
             storePassword 'Kari0917$'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "ar.edu.frc.utn.app"
         minSdkVersion 22
-        targetSdkVersion 22
-        versionCode 2
-        versionName "1.1"
+        targetSdkVersion 26
+        versionCode 5
+        versionName '1.3'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
@@ -38,22 +38,22 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile files('libs/simple-xml-2.7.1.jar')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'junit:junit:4.12'
-    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
-    compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.google.code.gson:gson:2.8.1'
-    compile 'org.apache.poi:poi:3.17'
-    compile 'org.jsoup:jsoup:1.10.3'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    implementation files('libs/simple-xml-2.7.1.jar')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:design:25.3.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    implementation 'com.android.support:support-v4:25.3.1'
+    implementation 'junit:junit:4.12'
+    implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    implementation 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
+    implementation 'com.android.support:cardview-v7:25.3.1'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'org.apache.poi:poi:3.17'
+    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 }
