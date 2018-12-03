@@ -1,16 +1,16 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ar.edu.frc.utn.app.FragmentInicio">
+    tools:context="ar.edu.frc.utn.app.Fragments.FragmentInicio">
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeInicio"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ar.edu.frc.utn.app.NestedWebView
+    <ar.edu.frc.utn.app.CustomView.NestedWebView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/inicio_webview"
@@ -24,4 +24,4 @@
         app:layout_scrollFlags="scroll|snap"
         />
     </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+</RelativeLayout>

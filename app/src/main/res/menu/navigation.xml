@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home"
+        android:title="@string/label_tab1" />
+
+    <item
+        android:id="@+id/navigation_crono"
+        android:icon="@drawable/crono"
+        android:title="@string/label_tab7" />
+
+    <item
+        android:id="@+id/navigation_noticias"
+        android:icon="@drawable/noticias2"
+        android:title="@string/label_tab3" />
+
+    <item
+        android:id="@+id/navigation_autogestion"
+        android:icon="@drawable/autogestion"
+        android:title="@string/autogestion" />
+
+    <item
+        android:id="@+id/navigation_more"
+        android:icon="@drawable/more"
+        android:title="@string/more" />
+
+</menu>

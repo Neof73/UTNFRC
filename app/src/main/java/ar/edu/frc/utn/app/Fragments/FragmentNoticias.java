@@ -1,0 +1,177 @@
+package ar.edu.frc.utn.app.Fragments;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.text.ParseException;
+
+import ar.edu.frc.utn.app.Feed.FeedAdapterRecycler;
+import ar.edu.frc.utn.app.Feed.FeedLoadData;
+import ar.edu.frc.utn.app.Feed.FeedSQLDatabase;
+import ar.edu.frc.utn.app.R;
+import ar.edu.frc.utn.app.Feed.Rss;
+import ar.edu.frc.utn.app.Feed.VolleySingleton;
+import ar.edu.frc.utn.app.Feed.XmlRequest;
+
+/**
+ * Created by Usuario- on 20/10/2016.
+ */
+
+public class FragmentNoticias extends Fragment {
+    public static final String TAG = "ERR:FRAGMENT3";
+    private RecyclerView listView;
+    private SwipeRefreshLayout swipeContainer;
+    private View layoutNoticias;
+    private FeedAdapterRecycler adapter;
+    private boolean loaded = false;
+    private boolean visible = false;
+    private static FragmentNoticias fragment;
+
+    public FragmentNoticias() {
+        // Required empty public constructor
+    }
+
+    public static Fragment newInstance(){
+        if (fragment == null) {
+            fragment = new FragmentNoticias();
+            Bundle args = new Bundle();
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        // Obtener la lista
+        layoutNoticias = inflater.inflate(R.layout.rss_list, container, false);
+        return layoutNoticias;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        listView = (RecyclerView) getActivity().findViewById(R.id.lista);
+        swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRssFeed();
+            }
+        });
+        if (!loaded) {
+            initialize();
+            loaded = true;
+        }
+    }
+
+    private void initialize() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected() ){ //&& listView == null) {
+            getRssFeed();
+        } else {
+            getLastRssFeed();
+        }
+    }
+
+    private void getRssFeed() {
+        swipeContainer.setRefreshing(true);
+        VolleySingleton singleton = VolleySingleton.getInstance(getActivity());
+        Response.Listener<Rss> response = new Response.Listener<Rss>() {
+            @Override
+            public void onResponse(Rss response) {
+                // Caching
+                catchResponse(response);
+            }
+
+            ;
+        };
+        Response.ErrorListener responseError = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error Volley: " + error.getMessage());
+                //Try to get last feed...
+                getLastRssFeed();
+            }
+        };
+
+        String URL_FEED = getResources().getString(R.string.rssURl);
+        XmlRequest<Rss> request = new XmlRequest<Rss>(URL_FEED, Rss.class, null, response, responseError);
+        singleton.addToRequestQueue(request);
+    }
+
+    private void getLastRssFeed() {
+        Log.i(TAG, "La conexión a internet no está disponible");
+        swipeContainer.setRefreshing(true);
+        adapter = new FeedAdapterRecycler(
+                getContext(),
+                FeedSQLDatabase.getInstance(getContext()).obtenerEntradas());
+
+        // Relacionar la lista con el adaptador
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        listView.setLayoutManager(mLayoutManager);
+        listView.setItemAnimator(new DefaultItemAnimator());
+        listView.setAdapter(adapter);
+        swipeContainer.setRefreshing(false);
+    }
+
+    private void catchResponse(Rss response) {
+        try {
+            FeedSQLDatabase.getInstance(getActivity()).
+                    sincronizarEntradas(response.getChannel().getItems());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // Carga inicial de datos...
+        new FeedLoadData(getActivity(), listView, swipeContainer).execute();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !loaded) {
+            initialize();
+            loaded = true;
+        }
+        visible = isVisibleToUser;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (loaded) {
+            outState.putString("pressList", "loaded");
+        }
+        outState.putBoolean("loaded", loaded);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            String sLoaded = savedInstanceState.getString("pressList", "");
+            Boolean bLoaded = savedInstanceState.getBoolean("loaded", false);
+            if (!sLoaded.isEmpty() && bLoaded) {
+                loaded = true;
+                getLastRssFeed();
+            }
+        }
+    }
+}

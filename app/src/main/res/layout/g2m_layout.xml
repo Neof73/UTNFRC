@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ar.edu.frc.utn.app.FragmentCursos">
+    tools:context="ar.edu.frc.utn.app.Fragments.FragmentCursos">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v4.widget.SwipeRefreshLayout
@@ -10,7 +10,7 @@
         android:id="@+id/swipeG2M"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ar.edu.frc.utn.app.NestedWebView
+    <ar.edu.frc.utn.app.CustomView.NestedWebView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/g2m_webview"
         android:layout_width="match_parent"

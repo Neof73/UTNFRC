@@ -13,7 +13,7 @@ public class AcercaDeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acerca_de);
         ImageView imgView = (ImageView) findViewById(R.id.about_logo);
-        imgView.setImageResource(R.drawable.logoutn5);
+        imgView.setImageResource(R.drawable.logoutn6);
         TextView utnEmail = (TextView) findViewById(R.id.about_email);
         utnEmail.setMovementMethod(LinkMovementMethod.getInstance());
         TextView utnWeb = (TextView) findViewById(R.id.about_website);

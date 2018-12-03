@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import ar.edu.frc.utn.app.Fragments.PagerAdapter;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int INTERNET_REQUEST = 2222;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_b);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.drawable.logoutn5);
+        toolbar.setLogo(R.drawable.logoutn6);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 

@@ -3,6 +3,7 @@
     <string name="app_title">Universidad Tecnológica Nacional</string>
     <string name="app_subtitle">Facultad Regional Córdoba</string>
     <string name="app_subtitle2">SEU Area Educación a Distancia</string>
+    <string name="app_fulltitle">Universidad Tecnológica Nacional Facultad Regional Córdoba SEU Area Educación a Distancia</string>
     <string name="label_tab1">Inicio</string>
     <string name="label_tab2">Cursos</string>
     <string name="label_tab3">Noticias</string>
@@ -10,6 +11,8 @@
     <string name="label_tab5">Radio</string>
     <string name="label_tab6">GotoMeeting</string>
     <string name="label_tab7">Cronograma</string>
+    <string name="label_tab8">Mas</string>
+    <string name="label_tab9">Videoconferencia</string>
     <string name="acerca_de">Acerca de...</string>
     <string name="salir">Salir</string>
     <string name="usuario">Usuario</string>
@@ -47,4 +50,34 @@
     <string name="doubleback">Presione nuevamente back para salir...</string>
     <string name="radionotifytitle">UTNFRC - Radio Streaming</string>
     <string name="radionotifytext">Se está reproduciendo radio FM 94.3 - Radio UTN</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="more">Mas</string>
+    <string name="autogestion">Autogestión</string>
+    <string name="g2m_description">Acceder al sitio de GotoMeeting</string>
+    <string name="radio_description">Escuchar la radio de la Universidad FM 94.3</string>
+    <string name="cursos_description">Ver las diplomaturas de Educacion a Distancia.</string>
+    <string name="contacto_description">Contactese con el departamento de Educación a Distancia.</string>
+    <string name="videoconferencia_description">Utilice la plataforma de videoconferencia de la Universidad.</string>
+    <string name="radio_media">http://radio.solumedia.com.ar:8200/stream</string>
+    <string name="channel_name">Radio</string>
+    <string name="channel_description">Escuchando radio UTN.</string>
+    <string name="title_activity_fragment_autogestion">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="presentacion">presentacion</string>
+    <string name="clases">clases</string>
+    <string name="fecha">fecha</string>
 </resources>
