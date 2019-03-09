@@ -3,6 +3,7 @@
     <string name="app_title">Universidad Tecnológica Nacional</string>
     <string name="app_subtitle">Facultad Regional Córdoba</string>
     <string name="app_subtitle2">SEU Area Educación a Distancia</string>
+    <string name="app_short_title">UTN FRC</string>
     <string name="app_fulltitle">Universidad Tecnológica Nacional Facultad Regional Córdoba SEU Area Educación a Distancia</string>
     <string name="label_tab1">Inicio</string>
     <string name="label_tab2">Cursos</string>
@@ -43,6 +44,8 @@
     <string name="g2mUrl">https://www.gotomeeting.com/es-es/meeting/join-meeting</string>
     <string name="cronoLoginUrl">https://uv.frc.utn.edu.ar/login/index.php</string>
     <string name="cronoResourceUrl">https://uv.frc.utn.edu.ar/mod/resource/view.php?id=37625</string>
+    <string name="cronoResourceUrl2">https://drive.google.com/file/d/1IWDlkFrXQ-nK3O8P5-DNh_EHtPbDYzQA/view?usp=sharing</string>
+    <string name="csBasicasUrl">http://tecne.com.ar/utn</string>
     <string name="cronoLoading">Cargando cronogramas de cursos...</string>
     <string name="cronoData">username=aplicacionmobile&amp;password=mobile821</string>
     <string name="cronoUnidad">Unidad</string>
@@ -56,11 +59,14 @@
     <string name="title_notifications">Notifications</string>
     <string name="more">Mas</string>
     <string name="autogestion">Autogestión</string>
+    <string name="csbasicas">Cs. Básicas</string>
+    <string name="virtual">Ed. a Distancia</string>
     <string name="g2m_description">Acceder al sitio de GotoMeeting</string>
     <string name="radio_description">Escuchar la radio de la Universidad FM 94.3</string>
     <string name="cursos_description">Ver las diplomaturas de Educacion a Distancia.</string>
     <string name="contacto_description">Contactese con el departamento de Educación a Distancia.</string>
     <string name="videoconferencia_description">Utilice la plataforma de videoconferencia de la Universidad.</string>
+    <string name="crono_description">Vea el cronograma de cursos de nuestra plataforma de Educación a Distancia</string>
     <string name="radio_media">http://radio.solumedia.com.ar:8200/stream</string>
     <string name="channel_name">Radio</string>
     <string name="channel_description">Escuchando radio UTN.</string>

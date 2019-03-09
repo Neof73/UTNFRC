@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -17,17 +16,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import ar.edu.frc.utn.app.Fragments.FragmentAutogestion;
+import ar.edu.frc.utn.app.Fragments.FragmentCsBasicas;
 import ar.edu.frc.utn.app.Fragments.FragmentContacto;
 import ar.edu.frc.utn.app.Fragments.FragmentCursos;
 import ar.edu.frc.utn.app.Fragments.FragmentG2M;
 import ar.edu.frc.utn.app.Fragments.FragmentHome;
-import ar.edu.frc.utn.app.Fragments.FragmentInicio;
-import ar.edu.frc.utn.app.Fragments.FragmentMore;
+import ar.edu.frc.utn.app.Fragments.FragmentEdVirtual;
 import ar.edu.frc.utn.app.Fragments.FragmentMore2;
 import ar.edu.frc.utn.app.Fragments.FragmentRadio;
 import ar.edu.frc.utn.app.Fragments.FragmentCrono;
@@ -40,16 +36,17 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
     private static final int NETWORKSTATE_REQUEST = 3333;
     private boolean doubleBackToExitPressedOnce;
 
-    public static final String TAG_FRAGMENT_INICIO = "fragment_inicio";
+    public static final String TAG_FRAGMENT_VIRTUAL = "fragment_inicio";
     public static final String TAG_FRAGMENT_NOTICIAS = "fragment_noticias";
     public static final String TAG_FRAGMENT_CURSOS = "fragment_cursos";
     public static final String TAG_FRAGMENT_CRONOGRAMA = "fragment_cronograma";
     public static final String TAG_FRAGMENT_GOTOMEETING = "fragment_gotomeeting";
     public static final String TAG_FRAGMENT_RADIO = "fragment_radio";
-    public static final String TAG_FRAGMENT_AUTOGESTION = "fragment_autogestion";
+    public static final String TAG_FRAGMENT_CSBASICAS = "fragment_csbasicas";
     public static final String TAG_FRAGMENT_MORE = "fragment_more";
     public static final String TAG_FRAGMENT_CONTACTO = "fragment_contacto";
     public static final String TAG_FRAGMENT_VIDEOCONF = "fragment_video_conferencia";
+    public static final String TAG_FRAGMENT_HOME = "fragment_home";
 
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
@@ -62,16 +59,16 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    openFragmentByTagName(TAG_FRAGMENT_INICIO);
+                    openFragmentByTagName(TAG_FRAGMENT_HOME);
                     return true;
-                case R.id.navigation_crono:
-                    openFragmentByTagName(TAG_FRAGMENT_CRONOGRAMA);
+                case R.id.navigation_csbasicas:
+                    openFragmentByTagName(TAG_FRAGMENT_CSBASICAS);
+                    return true;
+                case R.id.navigation_virtual:
+                    openFragmentByTagName(TAG_FRAGMENT_VIRTUAL);
                     return true;
                 case R.id.navigation_noticias:
                     openFragmentByTagName(TAG_FRAGMENT_NOTICIAS);
-                    return true;
-                case R.id.navigation_autogestion:
-                    openFragmentByTagName(TAG_FRAGMENT_AUTOGESTION);
                     return true;
                 case R.id.navigation_more:
                     openFragmentByTagName(TAG_FRAGMENT_MORE);
@@ -91,7 +88,7 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
         setSupportActionBar(toolbar);
         fragmentManager = getSupportFragmentManager();
 
-        // loadFragment(new FragmentInicio(), TAG_FRAGMENT_INICIO);
+        // loadFragment(new FragmentEdVirtual(), TAG_FRAGMENT_VIRTUAL);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -160,12 +157,13 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
             case TAG_FRAGMENT_CURSOS: return new FragmentCursos();
             case TAG_FRAGMENT_CONTACTO: return new FragmentContacto();
             case TAG_FRAGMENT_VIDEOCONF: return new FragmentVideoConferencia();
-            case TAG_FRAGMENT_INICIO: return new FragmentInicio();
+            case TAG_FRAGMENT_VIRTUAL: return new FragmentEdVirtual();
             case TAG_FRAGMENT_CRONOGRAMA: return new FragmentCrono();
             case TAG_FRAGMENT_NOTICIAS: return FragmentNoticias.newInstance();
-            case TAG_FRAGMENT_AUTOGESTION: return new FragmentAutogestion();
+            case TAG_FRAGMENT_CSBASICAS: return new FragmentCsBasicas();
             case TAG_FRAGMENT_MORE: return FragmentMore2.newInstance(1);
-            default: return new FragmentInicio();
+            case TAG_FRAGMENT_HOME: return new FragmentHome();
+            default: return new FragmentHome();
         }
     }
 
@@ -183,7 +181,7 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
             fragmentManager.findFragmentByTag(currentFragmentTag).getRetainInstance();
         else {
             if (currentFragmentTag.isEmpty()) {
-                openFragmentByTagName(TAG_FRAGMENT_INICIO);
+                openFragmentByTagName(TAG_FRAGMENT_HOME);
             }
         }
     }

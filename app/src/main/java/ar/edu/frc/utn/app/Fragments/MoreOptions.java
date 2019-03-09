@@ -37,10 +37,11 @@ public class MoreOptions {
     private static MoreItem createMoreItem(Context context, int position) {
         switch (position) {
             case 1: return new MoreItem(context, R.string.label_tab2, Main2Activity.TAG_FRAGMENT_CURSOS,R.string.cursos_description, R.drawable.curso);
-            case 2: return new MoreItem(context, R.string.label_tab4, Main2Activity.TAG_FRAGMENT_CONTACTO,R.string.contacto_description, R.drawable.contacto);
-            case 3: return new MoreItem(context, R.string.label_tab5, Main2Activity.TAG_FRAGMENT_RADIO,R.string.radio_description, R.drawable.radio);
-            case 4: return new MoreItem(context, R.string.label_tab6, Main2Activity.TAG_FRAGMENT_GOTOMEETING,R.string.g2m_description, R.drawable.g2m);
-            case 5: return new MoreItem(context, R.string.label_tab9, Main2Activity.TAG_FRAGMENT_VIDEOCONF,R.string.videoconferencia_description, R.drawable.videoconf);
+            case 2: return new MoreItem(context, R.string.label_tab7, Main2Activity.TAG_FRAGMENT_CRONOGRAMA,R.string.crono_description, R.drawable.crono);
+            case 3: return new MoreItem(context, R.string.label_tab4, Main2Activity.TAG_FRAGMENT_CONTACTO,R.string.contacto_description, R.drawable.contacto);
+            case 4: return new MoreItem(context, R.string.label_tab5, Main2Activity.TAG_FRAGMENT_RADIO,R.string.radio_description, R.drawable.radio);
+            case 5: return new MoreItem(context, R.string.label_tab6, Main2Activity.TAG_FRAGMENT_GOTOMEETING,R.string.g2m_description, R.drawable.g2m);
+            case 6: return new MoreItem(context, R.string.label_tab9, Main2Activity.TAG_FRAGMENT_VIDEOCONF,R.string.videoconferencia_description, R.drawable.videoconf);
         }
         return null;
     }

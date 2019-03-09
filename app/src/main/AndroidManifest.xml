@@ -34,7 +34,7 @@
         <activity android:name=".Gallery.GalleryActivity" />
         <activity android:name=".Gallery.ImageActivity" />
         <activity
-            android:name=".FragmentAutogestion"
+            android:name=".Fragments.FragmentAutogestion"
             android:label="@string/title_activity_fragment_autogestion"
             android:parentActivityName="android.support.v4.app.FragmentActivity">
             <meta-data

@@ -9,12 +9,14 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -73,20 +75,23 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
                     .post(body)
                     .addHeader("content-type", "application/x-www-form-urlencoded")
                     .addHeader("cache-control", "no-cache")
+                    .addHeader("content-disposition", "attachment; filename=crono.xlsx")
                     .build();
 
             Response response = client.newCall(request).execute();
 
-            if (response.code() == 200) {
+            if (response.code() == 200 && response.message().equals("OK")) {
                 Request request2 = new Request.Builder()
                         .url(urlCronograma)
                         .get()
-                        .addHeader("content-type", "application/x-www-form-urlencoded")
+                        .addHeader("content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") //"application/x-www-form-urlencoded")
                         .addHeader("cache-control", "no-cache")
                         .build();
 
                 Response response2 = client.newCall(request2).execute();
-                parseExcel(response2.body().byteStream());
+                if (response2.message().equals("OK") && response2.code() == 200) {
+                    parseExcel(response2.body().byteStream());
+                }
             }
             return CourseList;
         } catch (Exception e) {
@@ -109,17 +114,30 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
     {
         try{
             // Create a workbook using the Input Stream
-            HSSFWorkbook myWorkBook = new HSSFWorkbook(fis);
+            // HSSFWorkbook, InputStream, needs more memory
+
+            /*
+            String ExternalStorageDirectoryPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            String targetFile = ExternalStorageDirectoryPath +
+                    File.separator + "2019 CronoGral.xlsx";
+            File fs = new File(targetFile);
+            FileInputStream fis2 = new FileInputStream(fs);
+            Workbook myWorkBook = WorkbookFactory.create(fis2);
+            */
+
+            Workbook myWorkBook = WorkbookFactory.create(fis);
+            //HSSFWorkbook myWorkBook = new HSSFWorkbook(fis);
+            //XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
 
             // Get the first sheet from workbook
-            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
+            Sheet mySheet = myWorkBook.getSheetAt(0);
 
             // We now need something to iterate through the cells
             Iterator<Row> rowIter = mySheet.rowIterator();
             Integer id = 0;
             while (rowIter.hasNext()) {
                 try {
-                    HSSFRow myRow = (HSSFRow) rowIter.next();
+                    Row myRow = rowIter.next();
                     // Skip the first 3 rows
                     if (myRow.getRowNum() < 3) {
                         continue;
@@ -136,13 +154,13 @@ public class GetCronograma extends AsyncTask<String, ProgressDialog, ArrayList<C
                     Iterator<Cell> cellIter = myRow.cellIterator();
                     while (cellIter.hasNext()) {
 
-                        HSSFCell myCell = (HSSFCell) cellIter.next();
+                        Cell myCell = cellIter.next();
                         String cellValue = "";
 
                         // Check for cell Type
-                        if (myCell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                        if (myCell.getCellType() == Cell.CELL_TYPE_STRING) {
                             cellValue = myCell.getStringCellValue();
-                        } else if (myCell.getCellType() == HSSFCell.CELL_TYPE_BLANK) {
+                        } else if (myCell.getCellType() == Cell.CELL_TYPE_BLANK) {
                             cellValue = myCell.getStringCellValue();
                         } else {
                             cellValue = String.valueOf(myCell.getNumericCellValue());

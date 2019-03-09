@@ -1,6 +1,7 @@
 package ar.edu.frc.utn.app.Browsers;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import ar.edu.frc.utn.app.CustomView.NestedWebView;
 import ar.edu.frc.utn.app.Main2Activity;
 import ar.edu.frc.utn.app.R;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Mario Di Giorgio on 16/09/2017.
@@ -64,7 +68,7 @@ public class BrowserEducacion {
                         final ViewPager viewPager = (ViewPager) context.findViewById(R.id.pager);
                         view.stopLoading();
                         //viewPager.setCurrentItem(0);
-                        ((Main2Activity)context).openFragmentByTagName(Main2Activity.TAG_FRAGMENT_INICIO);
+                        ((Main2Activity)context).openFragmentByTagName(Main2Activity.TAG_FRAGMENT_VIRTUAL);
                     }
                     if ((Uri.parse(url).getPath().contains("cursos") || Uri.parse(url).getPath().contains("courses")) && !Uri.parse(mainurl).getPath().contains("cursos")) {
                         final ViewPager viewPager = (ViewPager) context.findViewById(R.id.pager);
@@ -80,12 +84,27 @@ public class BrowserEducacion {
                     }
                     return false;
                 }
+                if (Uri.parse(url).getPath().contains("cienciasbasicas") && !Uri.parse(url).getPath().contains(".pdf")) {
+                    final ViewPager viewPager = (ViewPager) context.findViewById(R.id.pager);
+                    view.setVisibility(View.INVISIBLE);
+                    //viewPager.setCurrentItem(0);
+                    //((Main2Activity)context).openFragmentByTagName(Main2Activity.TAG_FRAGMENT_VIRTUAL);
+                    return false;
+                }
                 // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 context.startActivity(intent);
                 return true;
             }
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (url.contains("cienciasbasicas")) {
+                    browser.setVisibility(View.INVISIBLE);
+                    //view.setVisibility(View.INVISIBLE);
+                }
+            }
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -95,10 +114,19 @@ public class BrowserEducacion {
 
                 view.loadUrl("javascript:(function() { " +
                         "document.getElementsByClassName('menu-mobile-effect navbar-toggle')[0].style.display='none'; " +
+                        "window.CallToAnAndroidFunction.setVisible(); " +
                         "})()");
 
+                if (url.contains("cienciasbasicas")) {
+                    view.loadUrl("javascript:(function() { " +
+                            "document.getElementsByTagName('div')[0].style.width = 'auto'; " +
+                            "window.CallToAnAndroidFunction.setVisible(); " +
+                            "})()");
+                }
                 swipe.setRefreshing(false);
             }
+
+
 
             @Override
             public void onReceivedError(final WebView view, int errorCode, String description,
@@ -109,6 +137,8 @@ public class BrowserEducacion {
                 super.onReceivedError(view, errorCode, description, failingUrl);
             }
         });
+        //Add a JavaScriptInterface, so I can make calls from the web to Java methods
+        browser.addJavascriptInterface(new myJavaScriptInterface(), "CallToAnAndroidFunction");
 
         browser.setOnKeyListener(new View.OnKeyListener()
         {
@@ -166,29 +196,18 @@ public class BrowserEducacion {
         }
     }
 
-
-    /*
-    class MyJavaScriptInterface {
-
-        private Context ctx;
-
-        MyJavaScriptInterface(Context ctx) {
-            this.ctx = ctx;
-        }
-
+    public class myJavaScriptInterface {
         @JavascriptInterface
-        public void showHTML(String html) {
-            try {
-                org.jsoup.nodes.Document document = Jsoup.parse(html, "ISO-8859-1");
-                document.getElementsByClass("menu-mobile-effect navbar-toggle").remove();
-                browser.loadData(document.toString(), "text/html", "ISO-8859-1");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //new AlertDialog.Builder(ctx).setTitle("HTML").setMessage(html)
-            //        .setPositiveButton(android.R.string.ok, null).setCancelable(false).create().show();
+        public void setVisible(){
+            context.runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    browser.setVisibility(View.VISIBLE);
+                }
+            });
         }
+
     }
-    */
 
 }

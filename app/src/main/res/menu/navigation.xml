@@ -7,19 +7,19 @@
         android:title="@string/label_tab1" />
 
     <item
-        android:id="@+id/navigation_crono"
-        android:icon="@drawable/crono"
-        android:title="@string/label_tab7" />
+        android:id="@+id/navigation_csbasicas"
+        android:icon="@drawable/csbasicas"
+        android:title="@string/csbasicas" />
+
+    <item
+        android:id="@+id/navigation_virtual"
+        android:icon="@drawable/virtual"
+        android:title="@string/virtual" />
 
     <item
         android:id="@+id/navigation_noticias"
         android:icon="@drawable/noticias2"
         android:title="@string/label_tab3" />
-
-    <item
-        android:id="@+id/navigation_autogestion"
-        android:icon="@drawable/autogestion"
-        android:title="@string/autogestion" />
 
     <item
         android:id="@+id/navigation_more"

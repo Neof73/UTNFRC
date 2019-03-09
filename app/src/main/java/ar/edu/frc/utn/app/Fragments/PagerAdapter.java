@@ -22,7 +22,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 //TabFragment1 tab1 = new TabFragment1();
-                FragmentInicio tab1 = new FragmentInicio();
+                FragmentEdVirtual tab1 = new FragmentEdVirtual();
                 return tab1;
             case 1:
                 //return new Fragment();

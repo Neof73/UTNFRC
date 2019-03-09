@@ -14,11 +14,11 @@ import ar.edu.frc.utn.app.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentInicio extends Fragment {
+public class FragmentEdVirtual extends Fragment {
     private WebView browser;
     private boolean pageLoaded = false;
     private SwipeRefreshLayout swipeInicio;
-    public FragmentInicio() {
+    public FragmentEdVirtual() {
         // Required empty public constructor
     }
 
