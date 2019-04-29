@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ar.edu.frc.utn.app.Browsers.BrowserCienciasBasicas;
 import ar.edu.frc.utn.app.Browsers.BrowserEducacion;
 import ar.edu.frc.utn.app.R;
 
@@ -67,10 +68,8 @@ public class FragmentCsBasicas extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        BrowserEducacion browserEducacion = new BrowserEducacion(getActivity(), R.id.csbasicas_webview, getString(R.string.csBasicasUrl), R.id.swipeCsBasicas);
-        browserEducacion.GetContent();
-
+        BrowserCienciasBasicas browserCienciasBasicas = new BrowserCienciasBasicas(getActivity(), R.id.csbasicas_webview, getString(R.string.csBasicasUrl), R.id.swipeCsBasicas);
+        browserCienciasBasicas.GetContent();
     }
 
 }

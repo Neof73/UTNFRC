@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/navigation_virtual"
-        android:icon="@drawable/virtual"
+        android:icon="@drawable/parbolica"
         android:title="@string/virtual" />
 
     <item

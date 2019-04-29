@@ -83,7 +83,7 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.drawable.logoutn6);
+        toolbar.setLogo(R.drawable.logoutn7);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         fragmentManager = getSupportFragmentManager();

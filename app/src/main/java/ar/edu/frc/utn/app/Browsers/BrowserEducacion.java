@@ -84,13 +84,15 @@ public class BrowserEducacion {
                     }
                     return false;
                 }
-                if (Uri.parse(url).getPath().contains("cienciasbasicas") && !Uri.parse(url).getPath().contains(".pdf")) {
+
+                if (Uri.parse(url).getHost().contains("tecne.com.ar")) {
                     final ViewPager viewPager = (ViewPager) context.findViewById(R.id.pager);
                     view.setVisibility(View.INVISIBLE);
                     //viewPager.setCurrentItem(0);
                     //((Main2Activity)context).openFragmentByTagName(Main2Activity.TAG_FRAGMENT_VIRTUAL);
                     return false;
                 }
+
                 // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 context.startActivity(intent);
@@ -100,7 +102,7 @@ public class BrowserEducacion {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                if (url.contains("cienciasbasicas")) {
+                if (url.contains("tecne.com.ar")) {
                     browser.setVisibility(View.INVISIBLE);
                     //view.setVisibility(View.INVISIBLE);
                 }
@@ -117,11 +119,12 @@ public class BrowserEducacion {
                         "window.CallToAnAndroidFunction.setVisible(); " +
                         "})()");
 
-                if (url.contains("cienciasbasicas")) {
-                    view.loadUrl("javascript:(function() { " +
+                if (url.contains("tecne.com.ar")) {
+                    /*view.loadUrl("javascript:(function() { " +
                             "document.getElementsByTagName('div')[0].style.width = 'auto'; " +
                             "window.CallToAnAndroidFunction.setVisible(); " +
-                            "})()");
+                            "})()");*/
+                    browser.setVisibility(View.VISIBLE);
                 }
                 swipe.setRefreshing(false);
             }

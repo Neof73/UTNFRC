@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UTN FRC - Virtual Education</string>
+    <string name="app_title">Universidad Tecnológica Nacional</string>
+    <string name="app_subtitle">Facultad Regional Córdoba</string>
+    <string name="app_subtitle2">SEU Virtual Education Area</string>
+    <string name="app_short_title">UTN FRC</string>
+    <string name="app_fulltitle">
+        Universidad Tecnológica Nacional Córdoba Regional School SEU Virtual Education Area</string>
+    <string name="label_tab1">Home</string>
+    <string name="label_tab2">Courses</string>
+    <string name="label_tab3">News</string>
+    <string name="label_tab4">Contact</string>
+    <string name="label_tab5">Radio</string>
+    <string name="label_tab6">GotoMeeting</string>
+    <string name="label_tab7">Schedule</string>
+    <string name="label_tab8">More</string>
+    <string name="label_tab9">Videoconferency</string>
+    <string name="acerca_de">About...</string>
+    <string name="salir">Exit</string>
+    <string name="usuario">User</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="enviar">Send</string>
+    <string name="nodata">No data...</string>
+    <string name="prefs">Preferences</string>
+    <string name="verfotos">View Photos</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="loading">Loading...</string>
+    <string name="load">Reload</string>
+    <string name="search">Search...</string>
+    <string name="refresh">Update</string>
+    <string name="version">Version 1.0.1</string>
+    <string name="utnfrc">UTN - FRC</string>
+    <string name="utnfrc_email"><a href="mailto:prensa@extension.frc.utn.edu.ar">Contact</a></string>
+    <string name="utnfrc_website"><a href="http://uv.frc.utn.edu.ar">Website</a></string>
+    <string name="utnfrc_descripcion">Application created for the Universidad Tecnológica Nacional - Regional School Córdoba. \ N 2017 \ u00A9 Copyright. All rights reserved.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rssURl">https://www.frc.utn.edu.ar/prensa/?rss</string>
+    <string name="cursosUrl">http://educacionadistancia.frc.utn.edu.ar/cursos</string>
+    <string name="contactoUrl">http://educacionadistancia.frc.utn.edu.ar/contacto</string>
+    <string name="prensaUrl">http://www.frc.utn.edu.ar/prensa</string>
+    <string name="inicioUrl">http://educacionadistancia.frc.utn.edu.ar</string>
+    <string name="g2mUrl">https://www.gotomeeting.com/es-es/meeting/join-meeting</string>
+    <string name="cronoLoginUrl">https://uv.frc.utn.edu.ar/login/index.php</string>
+    <string name="cronoResourceUrl">https://uv.frc.utn.edu.ar/mod/resource/view.php?id=37625</string>
+    <string name="cronoResourceUrl2">https://drive.google.com/file/d/1IWDlkFrXQ-nK3O8P5-DNh_EHtPbDYzQA/view?usp=sharing</string>
+    <string name="csBasicasUrl">http://tecne.com.ar</string>
+    <string name="cronoLoading">Loading courses schedules...</string>
+    <string name="cronoData">username=aplicacionmobile&amp;password=mobile821</string>
+    <string name="cronoUnidad">Unit</string>
+    <string name="cronoExamen">Exams</string>
+    <string name="doubleback">Push back again to exit...</string>
+    <string name="radionotifytitle">UTNFRC - Radio Streaming</string>
+    <string name="radionotifytext">You are listen to radio FM 94.3 - Radio UTN</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="more">More</string>
+    <string name="autogestion">Self Management</string>
+    <string name="csbasicas">Basic Sc.</string>
+    <string name="virtual">Virtual Ed.</string>
+    <string name="g2m_description">Enter to GotoMeeting</string>
+    <string name="radio_description">Listen to school radio Universidad FM 94.3</string>
+    <string name="cursos_description">View Virtual Education courses.</string>
+    <string name="contacto_description">Contact with Virtual Education department.</string>
+    <string name="videoconferencia_description">Use school videoconference platform.</string>
+    <string name="crono_description">View courses schedule from our Virtual Education platform.</string>
+    <string name="radio_media">http://radio.solumedia.com.ar:8200/stream</string>
+    <string name="channel_name">Radio</string>
+    <string name="channel_description">Listo radio UTN.</string>
+    <string name="title_activity_fragment_autogestion">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="presentacion">presentation</string>
+    <string name="clases">lessons</string>
+    <string name="fecha">dates</string>
+</resources>

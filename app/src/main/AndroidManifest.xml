@@ -19,7 +19,7 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/app_title"
-            android:logo="@drawable/logoutn6">
+            android:logo="@drawable/logoutn7">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

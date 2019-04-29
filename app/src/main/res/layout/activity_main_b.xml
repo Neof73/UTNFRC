@@ -16,7 +16,7 @@
             android:layout_alignParentTop="true"
             android:background="@color/colorPrimaryDark"
             android:elevation="6dp"
-            android:logo="@drawable/logoutn6"
+            android:logo="@drawable/logoutn7"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:title=""
