@@ -47,7 +47,7 @@
     <string name="cronoLoginUrl">https://uv.frc.utn.edu.ar/login/index.php</string>
     <string name="cronoResourceUrl">https://uv.frc.utn.edu.ar/mod/resource/view.php?id=37625</string>
     <string name="cronoResourceUrl2">https://drive.google.com/file/d/1IWDlkFrXQ-nK3O8P5-DNh_EHtPbDYzQA/view?usp=sharing</string>
-    <string name="csBasicasUrl">http://tecne.com.ar</string>
+    <string name="csBasicasUrl">http://b9000224.ferozo.com/utn</string>
     <string name="cronoLoading">Loading courses schedules...</string>
     <string name="cronoData">username=aplicacionmobile&amp;password=mobile821</string>
     <string name="cronoUnidad">Unit</string>
