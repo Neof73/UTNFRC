@@ -26,6 +26,7 @@ public class ProcessCourses {
     ArrayList<Course> courseList = new ArrayList<>();
     ExpandableListView listview;
     Context context;
+    private CourseAdapterExpandable adapter;
 
     public ProcessCourses(Context context){
         this.context = context;
@@ -44,7 +45,8 @@ public class ProcessCourses {
 
             @Override
             public void afterTextChanged(Editable s) {
-                prepareListData(courseList);
+                //prepareListData(courseList);
+                adapter.getFilter().filter(s.toString());
             }
         });
     }
@@ -74,7 +76,7 @@ public class ProcessCourses {
             }
         }
 
-        final CourseAdapterExpandable adapter = new CourseAdapterExpandable(context, listDataHeader);
+        adapter = new CourseAdapterExpandable(context, listDataHeader);
         listview.setAdapter(adapter);
 
     }

@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,10 +19,11 @@ import ar.edu.frc.utn.app.R;
  * Created by Mario Di Giorgio on 16/06/2017.
  */
 
-public class CourseAdapter extends BaseAdapter {
+public class CourseAdapter extends BaseAdapter implements Filterable {
     Context context;
     int resource;
-    ArrayList<Course> courseList;
+    private ArrayList<Course> courseList;
+    private ItemFilter mFilter = new ItemFilter();
 
     public CourseAdapter(Context context, int elemento_lista_1, ArrayList<Course> courseList) {
         this.context = context;
@@ -75,5 +78,48 @@ public class CourseAdapter extends BaseAdapter {
             docente.setVisibility(View.GONE);
         }
        return view;
+    }
+
+    @Override
+     public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final ArrayList<Course> list = courseList;
+
+            int count = list.size();
+            final ArrayList<Course> nlist = new ArrayList<Course>(count);
+
+            Course filterableString ;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i);
+                if (filterableString.getNombre().toLowerCase().contains(filterString)
+                || filterableString.getDocente().toLowerCase().contains(filterString)
+                ) {
+                    nlist.add(filterableString);
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            courseList = (ArrayList<Course>) results.values;
+            notifyDataSetChanged();
+        }
     }
 }
