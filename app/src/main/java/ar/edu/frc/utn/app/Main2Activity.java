@@ -28,7 +28,6 @@ import ar.edu.frc.utn.app.Fragments.FragmentMore2;
 import ar.edu.frc.utn.app.Fragments.FragmentRadio;
 import ar.edu.frc.utn.app.Fragments.FragmentCrono;
 import ar.edu.frc.utn.app.Fragments.FragmentNoticias;
-import ar.edu.frc.utn.app.Fragments.FragmentVideoConferencia;
 import ar.edu.frc.utn.app.Fragments.MoreOptions;
 
 public class Main2Activity extends AppCompatActivity implements FragmentMore2.OnListFragmentInteractionListener {
@@ -156,7 +155,6 @@ public class Main2Activity extends AppCompatActivity implements FragmentMore2.On
             case TAG_FRAGMENT_RADIO: return new FragmentRadio();
             case TAG_FRAGMENT_CURSOS: return new FragmentCursos();
             case TAG_FRAGMENT_CONTACTO: return new FragmentContacto();
-            case TAG_FRAGMENT_VIDEOCONF: return new FragmentVideoConferencia();
             case TAG_FRAGMENT_VIRTUAL: return new FragmentEdVirtual();
             case TAG_FRAGMENT_CRONOGRAMA: return new FragmentCrono();
             case TAG_FRAGMENT_NOTICIAS: return FragmentNoticias.newInstance();
